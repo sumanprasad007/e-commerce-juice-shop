@@ -9,7 +9,8 @@
 
 export const environment = {
   production: false,
-  hostServer: 'http://localhost:3000'
+  hostServer: 'http://localhost:3000',
+  aiAssistantServer: 'http://localhost:8000'
 }
 
 /*

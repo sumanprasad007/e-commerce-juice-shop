@@ -8,3 +8,24 @@
 .mat-sidenav {
   width: 280px;
 }
+
+.ai-widget {
+  align-items: center;
+  background: #176b87;
+  border-radius: 50%;
+  bottom: 24px;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 28%);
+  color: #fff;
+  display: flex;
+  height: 56px;
+  justify-content: center;
+  position: fixed;
+  right: 24px;
+  width: 56px;
+  z-index: 20;
+}
+
+.ai-widget:hover,
+.ai-widget:focus-visible {
+  background: #11546a;
+}

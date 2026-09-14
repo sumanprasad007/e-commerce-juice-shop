@@ -15,6 +15,7 @@ i18n/*.invalid
 /data/juiceshop.sqlite-journal
 
 # Build
+__pycache__/
 .nyc_output/
 .sass-cache/
 build/

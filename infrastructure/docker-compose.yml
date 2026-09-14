@@ -40,6 +40,42 @@ services:
         limits:
           memory: 512M
 
+  ai-assistant:
+    build:
+      context: ../python-fastapi
+      dockerfile: Dockerfile
+    container_name: juice-shop-ai-assistant
+    restart: unless-stopped
+    env_file:
+      - ../.env
+    environment:
+      JUICE_SHOP_URL: http://juice-shop:3000
+      CHROMA_HOST: chroma
+      CHROMA_PORT: 8000
+      AI_ALLOWED_ORIGINS: http://localhost:3000,http://localhost
+    ports:
+      - "8000:8000"
+    depends_on:
+      chroma:
+        condition: service_started
+      juice-shop:
+        condition: service_started
+    networks:
+      - juice-shop-net
+
+  chroma:
+    image: chromadb/chroma:latest
+    container_name: juice-shop-chroma
+    restart: unless-stopped
+    expose:
+      - "8000"
+    ports:
+      - "8001:8000"
+    volumes:
+      - chroma-data:/chroma/chroma
+    networks:
+      - juice-shop-net
+
   redis:
     image: redis:7.4.4-alpine
     container_name: juice-shop-redis
@@ -77,6 +113,8 @@ volumes:
   juice-shop-data:
     driver: local
   mongo-data:
+    driver: local
+  chroma-data:
     driver: local
 
 networks:
