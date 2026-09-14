@@ -1,9 +1,9 @@
-FROM node:20.19.2-bookworm-slim AS base
+FROM node:22.22.3-bookworm-slim AS base
 RUN apt-get update && apt-get install -y --no-install-recommends \
     dumb-init=1.2.5-* \
     && rm -rf /var/lib/apt/lists/*
 
-FROM node:20.19.2-bookworm AS builder
+FROM node:22.22.3-bookworm AS builder
 
 WORKDIR /juice-shop
 COPY package*.json ./
