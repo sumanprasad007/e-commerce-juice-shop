@@ -17,7 +17,8 @@ RUN npm install --no-audit --no-fund
 COPY frontend/package*.json ./frontend/
 RUN cd frontend && npm install --ignore-scripts --no-audit --no-fund --legacy-peer-deps
 COPY . .
-RUN npm rebuild sqlite3 --build-from-source
+RUN npm install sqlite3@5.1.7 --build-from-source --foreground-scripts --no-audit --no-fund \
+    && node -e "require('sqlite3'); console.log('sqlite3 native binding loaded')"
 RUN npm run build && npm prune --production
 
 FROM base AS production
