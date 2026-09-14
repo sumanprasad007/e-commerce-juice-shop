@@ -8,6 +8,8 @@ FROM node:20.19.2-bookworm AS builder
 WORKDIR /juice-shop
 COPY package*.json ./
 RUN npm install --ignore-scripts --no-audit --no-fund
+COPY frontend/package*.json ./frontend/
+RUN cd frontend && npm install --ignore-scripts --no-audit --no-fund
 COPY . .
 RUN npm run build && npm prune --production
 
