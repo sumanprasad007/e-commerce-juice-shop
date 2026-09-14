@@ -13,8 +13,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /juice-shop
 COPY package*.json ./
-RUN npm install --ignore-scripts --no-audit --no-fund
 COPY frontend/package*.json ./frontend/
+RUN npm install --ignore-scripts --no-audit --no-fund
 RUN cd frontend && npm install --ignore-scripts --no-audit --no-fund --legacy-peer-deps
 COPY . .
 RUN npm rebuild sqlite3 --build-from-source --foreground-scripts --no-audit --no-fund
@@ -29,6 +29,8 @@ ENV NODE_ENV=production
 WORKDIR /juice-shop
 
 COPY --from=builder --chown=node:node /juice-shop .
+
+RUN mkdir -p logs && chown node:node logs
 
 RUN node -e "require('sqlite3'); console.log('sqlite3 native binding loaded in runtime image')"
 
