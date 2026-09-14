@@ -7,7 +7,7 @@ FROM node:22.22.3-bookworm AS builder
 
 WORKDIR /juice-shop
 COPY package*.json ./
-RUN npm install --ignore-scripts --no-audit --no-fund
+RUN npm install --no-audit --no-fund
 COPY frontend/package*.json ./frontend/
 RUN cd frontend && npm install --ignore-scripts --no-audit --no-fund --legacy-peer-deps
 COPY . .
