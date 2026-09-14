@@ -17,9 +17,11 @@ RUN npm install --no-audit --no-fund
 COPY frontend/package*.json ./frontend/
 RUN cd frontend && npm install --ignore-scripts --no-audit --no-fund --legacy-peer-deps
 COPY . .
-RUN npm install sqlite3@5.1.7 --build-from-source --foreground-scripts --no-audit --no-fund \
-    && node -e "require('sqlite3'); console.log('sqlite3 native binding loaded')"
+RUN npm install sqlite3@5.1.7 --build-from-source --foreground-scripts --no-audit --no-fund
 RUN npm run build && npm prune --production
+RUN npm rebuild sqlite3 --build-from-source --foreground-scripts --no-audit --no-fund \
+    && find node_modules/sqlite3 -name 'node_sqlite3.node' -print -quit \
+    && node -e "require('sqlite3'); console.log('sqlite3 native binding loaded after prune')"
 
 FROM base AS production
 
@@ -27,6 +29,8 @@ ENV NODE_ENV=production
 WORKDIR /juice-shop
 
 COPY --from=builder --chown=node:node /juice-shop .
+
+RUN node -e "require('sqlite3'); console.log('sqlite3 native binding loaded in runtime image')"
 
 USER node
 EXPOSE 3000
