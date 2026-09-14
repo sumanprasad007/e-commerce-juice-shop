@@ -9,7 +9,7 @@ WORKDIR /juice-shop
 COPY package*.json ./
 RUN npm install --ignore-scripts --no-audit --no-fund
 COPY frontend/package*.json ./frontend/
-RUN cd frontend && npm install --ignore-scripts --no-audit --no-fund
+RUN cd frontend && npm install --ignore-scripts --no-audit --no-fund --legacy-peer-deps
 COPY . .
 RUN npm run build && npm prune --production
 
