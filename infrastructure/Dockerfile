@@ -13,11 +13,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /juice-shop
 COPY package*.json ./
-RUN npm install --no-audit --no-fund
+RUN npm install --ignore-scripts --no-audit --no-fund
 COPY frontend/package*.json ./frontend/
 RUN cd frontend && npm install --ignore-scripts --no-audit --no-fund --legacy-peer-deps
 COPY . .
-RUN npm install sqlite3@5.1.7 --build-from-source --foreground-scripts --no-audit --no-fund
+RUN npm rebuild sqlite3 --build-from-source --foreground-scripts --no-audit --no-fund
 RUN npm run build && npm prune --production
 RUN npm rebuild sqlite3 --build-from-source --foreground-scripts --no-audit --no-fund \
     && find node_modules/sqlite3 -name 'node_sqlite3.node' -print -quit \
