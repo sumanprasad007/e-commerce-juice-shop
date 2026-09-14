@@ -5,12 +5,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 FROM node:22.22.3-bookworm AS builder
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    g++ \
+    make \
+    python3 \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /juice-shop
 COPY package*.json ./
 RUN npm install --no-audit --no-fund
 COPY frontend/package*.json ./frontend/
 RUN cd frontend && npm install --ignore-scripts --no-audit --no-fund --legacy-peer-deps
 COPY . .
+RUN npm rebuild sqlite3 --build-from-source
 RUN npm run build && npm prune --production
 
 FROM base AS production
