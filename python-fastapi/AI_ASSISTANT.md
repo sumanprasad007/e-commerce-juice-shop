@@ -16,8 +16,9 @@ Follow these steps:
 
 1. Install Docker Desktop and make sure Docker is running.
 2. Confirm `.env` contains a valid `OPEN_AI_KEY`. Do not commit this file.
-3. From the repository root, run `docker compose -f infrastructure/docker-compose.yml up --build`.
-4. Open `http://localhost:3000` and click the floating drink icon.
+3. From the repository root, run `git pull`, then `docker compose -f infrastructure/docker-compose.yml up --build`.
+
+4. Open `http://localhost:8080` and click the floating drink icon. Set `HTTP_PORT=80` if port 80 is available and you prefer `http://localhost`.
 5. Ask a product, pricing, or comparison question.
 6. Stop the stack with `Ctrl+C`, or run `docker compose -f infrastructure/docker-compose.yml down`.
 
