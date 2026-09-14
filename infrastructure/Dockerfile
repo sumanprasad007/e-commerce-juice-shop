@@ -7,7 +7,7 @@ FROM node:20.19.2-bookworm AS builder
 
 WORKDIR /juice-shop
 COPY package*.json ./
-RUN npm ci --ignore-scripts
+RUN npm install --ignore-scripts --no-audit --no-fund
 COPY . .
 RUN npm run build && npm prune --production
 
